@@ -27,7 +27,11 @@ const CryptoNews = () => {
         setHasMore(false);  // Disable infinite scroll if no more articles
       }
     } catch (error) {
-      setError('Error fetching the news. Please try again later.');
+      if (error.response && error.response.status === 403) {  // Handling specific error for production-level restriction
+        setError('Error fetching the news. Ensure you have the necessary subscription for the production environment.');
+      } else {
+        setError('Error fetching the news. Please try again later.');
+      }
       setLoading(false);
     }
   };
@@ -37,7 +41,7 @@ const CryptoNews = () => {
   }, [page]);  // Fetch news when page changes
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px ' }}>
       <Typography variant="h4" gutterBottom align="center">
         Crypto News
       </Typography>
