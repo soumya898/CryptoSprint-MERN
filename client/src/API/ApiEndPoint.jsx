@@ -50,6 +50,8 @@
 
 // export const HistoricalChart = (id, days, currency) =>
 //   `/api/historical-chart/${id}?days=${days}&currency=${currency}`;
+
+//ApiEndpoint.jsx
 export const TrendingCoins = (currency) =>
   `${import.meta.env.VITE_API_URL}/api/trending-coins?currency=${currency}`;
 

@@ -425,11 +425,14 @@ app.get('/api/transactions', async (req, res) => {
 app.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req, res) => {
     const sig = req.headers['stripe-signature'];
     let event;
+    // Log the incoming request body and headers
+    console.log('Received webhook:', req.body);
+    console.log('Received headers:', req.headers);
 
     try {
         // Validate Stripe signature
         event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
-
+        console.log('Webhook event validated:', event);
         // Handle different event types
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object; // Extract session data
