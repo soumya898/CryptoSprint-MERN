@@ -13,7 +13,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 const app = express();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
+const endpointSecret =process.env.STRIPE_WEBHOOK_SECRET
 app.set('trust proxy', 1); 
 // Middleware
 app.use(cors({
@@ -431,7 +431,7 @@ app.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req, r
 
     try {
         // Validate Stripe signature
-        event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+        event = stripe.webhooks.constructEvent(req.body, sig,endpointSecret);
         console.log('Webhook event validated:', event);
         // Handle different event types
         if (event.type === 'checkout.session.completed') {
