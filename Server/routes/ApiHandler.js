@@ -5,7 +5,7 @@ const axios = require("axios");
 const NodeCache = require("node-cache");
 
 const router = express.Router();
-const cache = new NodeCache({ stdTTL: 300 }); // Cache data for 5 minutes
+const cache = new NodeCache({ stdTTL: 1000 }); // Cache data for 16.7 minutes
 
 // Helper function to fetch and cache data
 const fetchData = async (cacheKey, url, res) => {
@@ -19,7 +19,13 @@ const fetchData = async (cacheKey, url, res) => {
     cache.set(cacheKey, response.data);
     res.json(response.data);
   } catch (error) {
+    // Detailed logging
     console.error(`Error fetching ${cacheKey}:`, error.message);
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    }
     res.status(500).json({ error: `Failed to fetch ${cacheKey}` });
   }
 };
