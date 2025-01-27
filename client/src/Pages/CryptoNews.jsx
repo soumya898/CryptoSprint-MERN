@@ -27,8 +27,8 @@ const CryptoNews = () => {
         setHasMore(false);  // Disable infinite scroll if no more articles
       }
     } catch (error) {
-      if (error.response && error.response.status === 403) {  // Handling specific error for production-level restriction
-        setError('Error fetching the news. Ensure you have the necessary subscription for the production environment.');
+      if (error.response && error.response.status === 426) {  // Handling specific error for production-level restriction
+        setError('Error 426 fetching the news. Ensure you have the necessary subscription for the production environment.');
       } else {
         setError('Error fetching the news. Please try again later.');
       }
