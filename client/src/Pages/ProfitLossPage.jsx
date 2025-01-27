@@ -13,7 +13,7 @@ const ProfitLossPage = () => {
     const [error, setError] = useState('');
     const [downloadFormat, setDownloadFormat] = useState('');
 
-    // useEffect(() => {
+   
     //     if (!currentUser?.email) {
     //         setError('User is not authenticated please login');
     //         console.log('The user is',currentUser);
@@ -56,7 +56,9 @@ const ProfitLossPage = () => {
             const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/transactions`, {
               params: { email: currentUser.email },
             });
-            setTransactions(response.data);
+            // Filter out INR transactions
+            const filteredTransactions = response.data.filter(transaction => transaction.coin !== 'INR');
+            setTransactions(filteredTransactions);
             setError('');
           } catch (error) {
             console.error('Error fetching transactions:', error);
