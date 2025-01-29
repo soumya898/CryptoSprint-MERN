@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, CardContent, Typography, Grid, CircularProgress, Alert } from '@mui/material';
@@ -8,6 +9,12 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const getPastDate = (days) => {
+  const today = new Date();
+  const pastDate = new Date(today.setDate(today.getDate() - days));
+  return pastDate.toISOString().split('T')[0];
+};
+
 const CryptoNews = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +23,8 @@ const CryptoNews = () => {
   const [hasMore, setHasMore] = useState(true);  // Infinite scroll flag
   const apiKey = '81eb7cafdc3444c9a66eb46c396e39b2';
   const pageSize = 10;  // Number of articles per page
-  const apiURL = `https://newsapi.org/v2/everything?q=crypto&from=2024-12-27&sortBy=publishedAt&apiKey=${apiKey}&pageSize=${pageSize}&page=${page}`;
+  const daysBack = 30;  // Number of days to go back
+  const apiURL = `https://newsapi.org/v2/everything?q=crypto&from=${getPastDate(daysBack)}&sortBy=publishedAt&apiKey=${apiKey}&pageSize=${pageSize}&page=${page}`;
 
   const fetchNews = async () => {
     try {
