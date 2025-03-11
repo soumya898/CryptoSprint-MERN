@@ -464,7 +464,7 @@ app.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req, r
                 service: 'gmail',
                 auth: {
                     user: 'soumyaranjannayak0140@gmail.com',
-                    pass: 'zubwpyofpwufopwg',
+                    pass: 'nyswnysvzcsmgfhe' ,
                 },
             });
 
